@@ -18,7 +18,6 @@ async def handle_client(reader, writer):
     try:
         # Receive client data
         data = await reader.read(1024)
-        print(f'Received raw data: {data}')
 
         # Check if it's an HTTP CONNECT request
         if data.startswith(b"CONNECT "):
@@ -32,7 +31,7 @@ async def handle_client(reader, writer):
 
             # Connect to the target server
             remote_reader, remote_writer = await asyncio.open_connection(dest_host, dest_port)
-            print(f'Connected to {dest_host}:{dest_port}')
+            print(f'Connected to {dest_host}:{dest_port} ✅')
 
             # Send a success response back to the client
             writer.write(b"HTTP/1.1 200 Connection Established\r\n\r\n")
@@ -55,20 +54,21 @@ async def handle_client(reader, writer):
                 forward_data(reader, remote_writer),
                 forward_data(remote_reader, writer)
             )
-            return  # Exit the function after handling CONNECT request
+            return
 
         # If not a CONNECT request, proceed with normal authentication
         decrypted_data = decrypt(data).decode('utf-8')
-        print(f'Decrypted data: {decrypted_data}')
 
         username, password = decrypted_data.split(":")
         if not authenticate(username, password):
-            print(f'Authentication failed for {addr}')
+            print(f'Authentication failed for {addr} ❌')
+            logging.error(f'Authentication failed for {addr} ❌')
             writer.close()
             await writer.wait_closed()
             return
 
-        print(f'User {username} authenticated successfully.')
+        print(f'User {username} authenticated successfully. ✅')
+        logging.info(f'User {username} authenticated successfully. ✅')
 
     except Exception as e:
         logging.error(f'Error handling client {addr}: {e}')
