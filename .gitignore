@@ -172,4 +172,3 @@ cython_debug/
 
 Dockerfile
 docker-compose.yml
-proxy_client.py
