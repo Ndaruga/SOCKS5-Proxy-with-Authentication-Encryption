@@ -1,0 +1,5 @@
+asyncio==3.4.3
+cffi==1.17.1
+cryptography==44.0.1
+pycparser==2.22
+PySocks==1.7.1
