@@ -1,4 +1,6 @@
+sudo apt-get update
 sudo apt install python3.12-venv
+sudo kill -9 $(sudo lsof -t -i:1080)
 python3 -m venv venv
 source venv/bin/activate
 echo Installing Libraries... ✅
