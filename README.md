@@ -135,6 +135,11 @@ This helps in debugging and tracking activity.
 
 ---
 
+## 🚀 Deployment
+To Deploy this Proxy on a cloud platform like **AWS**, Consider checking out the [Deployment instructions](https://github.com/Ndaruga/SOCKS5-Proxy-with-Authentication-Encryption/blob/main/Deployment.md)
+
+---
+
 ## ✅ Next Steps
 - **Enhance security**: Implement IP whitelisting.
 - **Improve performance**: Optimize multi-client handling.
