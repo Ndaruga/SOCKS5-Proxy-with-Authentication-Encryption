@@ -43,7 +43,15 @@ ssh -i your-key.pem ec2-user@your-ec2-public-ip
 
 ---
 
-## 🔥 Step 3: Install Dependencies
+## 📥 Step 3: Clone the SOCKS5 Proxy Repository
+```bash
+git clone https://github.com/Ndaruga/SOCKS5-Proxy-with-Authentication-Encryption.git
+cd SOCKS5-Proxy-with-Authentication-Encryption
+```
+   > You can choose to skip to **step 7** by running the command `sudo chmod u+x run-proxy-server.sh && ./run-proxy-server.sh`
+---
+
+## 🔥 Step 4: Install Dependencies
 Update the system and install required packages:
 ```bash
 sudo apt update && sudo apt upgrade -y
@@ -51,15 +59,7 @@ sudo apt install python3 python3-pip git -y
 ```
 Install the required Python libraries:
 ```bash
-pip3 install cryptography asyncio PySocks
-```
-
----
-
-## 📥 Step 4: Clone the SOCKS5 Proxy Repository
-```bash
-git clone https://github.com/your-repo/socks5-proxy.git
-cd socks5-proxy
+pip install -r requirements.txt
 ```
 
 ---
@@ -96,14 +96,34 @@ SOCKS5 Proxy Server started on 0.0.0.0:1080
 ---
 
 ## 🌐 Step 7: Configure a Client to Connect
-### **Option 1: Firefox**
+### **Option 1: Mobile Phone**
+1. Depending on the device, Open **Device Settings > WI-Fi**.
+2. Select the Wifi you are connected to and click on **More** or the **info Icon**
+3. Select **Proxy** and change the configuration to **Manual**
+4. In the **server/host**, Enter the EC2 **Public IP** and under port, enter **1080**.
+5. Enable authentication and use any of the following combinations
+   | username | Password      |
+   |----------|---------------|
+   | admin    | securepass456 |
+   | user1    | password123   |
+6. Save the configuration and open any browser on the Device. Visiting [whatismyipaddress.com](https://www.whatismyipaddress.com).
+
+   > ***Proxy configuration for this method only works when the device is connected to the internet via Wi-Fi***
+
+
+### **Option 2: Firefox**
 1. Open **Firefox > Settings > Network Settings**.
 2. Select **Manual Proxy Configuration**.
 3. Enter the EC2 **Public IP** and **Port 1080**.
 4. Enable **SOCKS v5** and **Proxy DNS when using SOCKS v5**.
-5. Save and test by visiting [whatismyipaddress.com](https://www.whatismyipaddress.com).
+6. Save and test by visiting [whatismyipaddress.com](https://www.whatismyipaddress.com).
+7. When prompted to Enter username and password, use any combinations below
+   | username | Password      |
+   |----------|---------------|
+   | admin    | securepass456 |
+   | user1    | password123   |
 
-### **Option 2: cURL**
+### **Option 3: Using cURL**
 Run the following command on your local machine:
 ```bash
 curl --proxy socks5://user1:password123@your-ec2-public-ip:1080 https://www.google.com
